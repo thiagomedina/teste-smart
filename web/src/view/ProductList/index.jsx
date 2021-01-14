@@ -1,9 +1,12 @@
 import React from 'react'
-
+import Header from '../../components/Header'
 
 const ProductList = () => {
-    return(
-        <p>produto</p>
+    return (
+        <>
+            <Header />
+            <p>prorpd</p>
+        </>
     )
 }
 
