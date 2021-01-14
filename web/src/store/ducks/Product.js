@@ -16,6 +16,7 @@ export const { Types, Creators } = createActions({
 const INITIAL_STATE = {
     data: [],
     loading: false,
+
 };
 
 const addProduct = (state = INITIAL_STATE, action = {}) => ({
@@ -26,7 +27,6 @@ const addProduct = (state = INITIAL_STATE, action = {}) => ({
 const addProductSuccess = (state = INITIAL_STATE, action) => ({
     ...state,
     loading: false,
-    data: action.payload,
 });
 
 const addProductFailure = (state = INITIAL_STATE, action) => ({

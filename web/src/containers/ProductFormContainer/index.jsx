@@ -4,7 +4,8 @@ import { Creators as ProductActions } from '../../store/ducks/Product';
 import { useDispatch, useSelector } from 'react-redux';
 
 import getValidationErrors from "../../utils/getValidationErrors";
-import { Container, Form, Button, ErrorMessage } from './styles'
+import { Container, Form, Button, ErrorMessage, Load } from './styles'
+import loadSvg from '../../assets/load.svg'
 
 const ProductFormContainer = () => {
     const dispatch = useDispatch();
@@ -14,7 +15,8 @@ const ProductFormContainer = () => {
     const [deadline, setDeadline] = useState('');
     const [inputError, setInputError] = useState('');
 
-    const loading = useSelector(state => state.Product)
+
+    const loading = useSelector(state => state.Product.loading)
 
     const handleRegisterProduct = async (event) => {
         event.preventDefault()
@@ -33,6 +35,7 @@ const ProductFormContainer = () => {
             });
             setInputError('')
             dispatch(ProductActions.addProduct(data))
+
         } catch (err) {
             if (err instanceof Yup.ValidationError) {
                 const errors = getValidationErrors(err);
@@ -77,7 +80,9 @@ const ProductFormContainer = () => {
                     />
                     <ErrorMessage> {inputError.deadline && inputError.deadline} </ErrorMessage>
                 </Form>
-                <Button type="submit" onClick={handleRegisterProduct}>Salvar</Button>
+                {loading ?
+                    <Load><img src={loadSvg} alt="" /></Load>
+                    : <Button type="submit" onClick={handleRegisterProduct}>Salvar</Button>}
             </fieldset>
         </Container>
     )

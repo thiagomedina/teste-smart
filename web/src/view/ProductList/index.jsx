@@ -14,13 +14,12 @@ const ProductList = () => {
         dispatch(ProductActions.getProduct())
     }, [dispatch])
 
-
     return (
         <>
             <Header />
             <Content>
                 <h1>Produtos Cadastrados</h1>
-                {products && products.map(item => <ProductCard prod={item} />)}
+                {products && products.map(item => <ProductCard key={item.id} prod={item} />)}
             </Content>
         </>
     )
