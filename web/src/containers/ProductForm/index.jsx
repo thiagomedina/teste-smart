@@ -57,6 +57,7 @@ const ProductFormContainer = () => {
             if (err instanceof Yup.ValidationError) {
                 const errors = getValidationErrors(err);
                 setInputError(errors)
+                return
             }
         }
     }
