@@ -8,7 +8,7 @@ const Header = () => {
     return (
         <Container>
             <Links>
-                <Link to="/">
+                <Link to="/register">
                     Cadastrar Produto
             </Link>
                 <Link to="/">
