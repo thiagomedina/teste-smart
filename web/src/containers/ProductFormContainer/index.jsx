@@ -1,22 +1,36 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import * as Yup from "yup";
 import { Creators as ProductActions } from '../../store/ducks/Product';
 import { useDispatch, useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+import moment from 'moment'
 
 import getValidationErrors from "../../utils/getValidationErrors";
 import { Container, Form, Button, ErrorMessage, Load } from './styles'
 import loadSvg from '../../assets/load.svg'
-
 const ProductFormContainer = () => {
     const dispatch = useDispatch();
+    const { id } = useParams();
+
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [value, setValue] = useState('');
-    const [deadline, setDeadline] = useState('');
+    const [deadline, setDeadline] = useState();
     const [inputError, setInputError] = useState('');
 
-
     const loading = useSelector(state => state.Product.loading)
+    const prod = useSelector(state => state.Product.data)
+
+    useEffect(() => {
+        if (id) {
+            const productToEdit = prod.filter((obj) => obj._id === id);
+            setName(productToEdit[0]?.name)
+            setDescription(productToEdit[0]?.description)
+            setValue(productToEdit[0]?.value)
+            setDeadline(moment(productToEdit[0]?.deadline).format('YYYY-MM-DD'))
+        }
+    }, []);
+
 
     const handleRegisterProduct = async (event) => {
         event.preventDefault()
@@ -34,7 +48,11 @@ const ProductFormContainer = () => {
                 abortEarly: false,
             });
             setInputError('')
-            dispatch(ProductActions.addProduct(data))
+
+            id ?
+                dispatch(ProductActions.updateProduct({...data, id}))
+                : dispatch(ProductActions.addProduct(data))
+
 
         } catch (err) {
             if (err instanceof Yup.ValidationError) {
@@ -51,7 +69,6 @@ const ProductFormContainer = () => {
                 <Form onSubmit={handleRegisterProduct}>
                     <label>Nome:</label>
                     <input
-                        id="name"
                         value={name}
                         onChange={e => setName(e.target.value)}
                         placeholder="Nome"
@@ -74,7 +91,7 @@ const ProductFormContainer = () => {
                     <label>Vencimento:</label>
                     <input
                         type='date'
-                        value={deadline}
+                        defaultValue={deadline}
                         onChange={e => setDeadline(e.target.value)}
                         placeholder="Vencimento"
                     />

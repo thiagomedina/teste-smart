@@ -11,6 +11,7 @@ function Routes() {
         <BrowserRouter>
             <Route path="/" exact component={ProductList} />
             <Route path="/register" exact component={ProductRegister} />
+            <Route path="/register/:id" exact component={ProductRegister} />
         </BrowserRouter>
     );
 }

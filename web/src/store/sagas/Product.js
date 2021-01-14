@@ -27,9 +27,24 @@ function* getProduct() {
     }
 }
 
+
+function* updateProduct(payload){
+
+    let response = {};
+    try {
+        response = yield call(api.put, `product/`, payload);
+         console.log(payload)
+    } catch (e) {
+        console.log(e);
+        yield put({ type: Types.GET_PRODUCT_FAILURE, errorMessage: 'error' });
+    } 
+
+}
+
 export default function* () {
     yield all([
         takeLatest(Types.ADD_PRODUCT, addProduct),
         takeLatest(Types.GET_PRODUCT, getProduct),
+        takeLatest(Types.UPDATE_PRODUCT, updateProduct),
     ]);
 }
