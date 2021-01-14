@@ -10,7 +10,7 @@ class ProductController {
     try {
 
       const { name, description, value, deadline } = req.body;
-      // await Product.create({ name, description, value, deadline })
+      await Product.create({ name, description, value, deadline })
       return res.status(201).json('product register successfuly')
     } catch (err) {
       console.log(err)
@@ -19,7 +19,6 @@ class ProductController {
         .json({ error: 'not was possible create a new product' })
     }
   }
-
 
 
   async update(req, res) {
