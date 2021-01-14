@@ -1,11 +1,13 @@
 import { call, takeLatest, all, put } from 'redux-saga/effects';
 import api from '../../services/api';
 
-import { Types } from '../ducks/Music';
+import { Types } from '../ducks/Product';
 
-function* addProduct() {
+function* addProduct(payload) {
     let response = {};
     try {
+
+        console.log(payload)
 
     } catch (e) {
         console.log(e);
@@ -17,5 +19,5 @@ function* addProduct() {
 export default function* () {
     yield all([
         takeLatest(Types.ADD_PRODUCT, addProduct),
-    ]);
+    ]); 
 }

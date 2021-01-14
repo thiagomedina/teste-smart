@@ -1,14 +1,20 @@
 import React, { useState } from 'react'
 import * as Yup from "yup";
+import { Creators as ProductActions } from '../../store/ducks/Product';
+import { useDispatch, useSelector } from 'react-redux';
+
 import getValidationErrors from "../../utils/getValidationErrors";
 import { Container, Form, Button, ErrorMessage } from './styles'
 
 const ProductFormContainer = () => {
+    const dispatch = useDispatch();
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [value, setValue] = useState('');
     const [deadline, setDeadline] = useState('');
     const [inputError, setInputError] = useState('');
+
+    const loading = useSelector(state => state.Product)
 
     const handleRegisterProduct = async (event) => {
         event.preventDefault()
@@ -25,8 +31,8 @@ const ProductFormContainer = () => {
             await schema.validate(data, {
                 abortEarly: false,
             });
-            console.log(data)
             setInputError('')
+            dispatch(ProductActions.addProduct(data))
         } catch (err) {
             if (err instanceof Yup.ValidationError) {
                 const errors = getValidationErrors(err);
