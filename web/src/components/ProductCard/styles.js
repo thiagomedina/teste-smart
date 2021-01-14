@@ -8,13 +8,18 @@ export const Container = styled.div`
   justify-content: center;
   padding: 16px;
   border-radius: 10px;
-  max-width: 1100px;    
   margin-top: 40px;
+  width: 800px;
 
+
+  @media (max-width: 800px) {
+    flex-direction: column;
+    max-width: 100%;
+  }
   strong {
     color: whitesmoke;
     font-size: 20px;
-    font-weight: 400;
+    font-weight: 500;
   }
 
   button {
@@ -32,7 +37,11 @@ export const Container = styled.div`
   }
 `;
 
-export const Table = styled.div``;
+export const Table = styled.div`
+display: flex;
+flex-direction: column;
+
+`;
 
 export const Buttons = styled.div`
   margin-left: auto;

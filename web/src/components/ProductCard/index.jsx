@@ -6,10 +6,12 @@ import { Container, Buttons, Table } from './styles'
 const ProductCard = () => {
     return (
         <Container>
-
             <Table>
-                <strong>Nome: nono</strong>
-
+                <span><strong>Nome: </strong>nome</span>
+                <span><strong>Descrição: </strong> deddddddddddddddddddddddddddddd</span>
+                <span><strong>Valor: </strong>34,00</span>
+                <span><strong>Vencimento: </strong>12/12/2021</span>
+               
             </Table>
             <Buttons>
                 <button type="button">

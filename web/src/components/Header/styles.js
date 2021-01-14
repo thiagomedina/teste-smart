@@ -5,9 +5,24 @@ export const Container = styled.header`
   background: #28262e;
   display: flex;
   align-items: center;
+  
 
-  @media (max-width: 800px) {
-    flex-direction: column;
-    justify-content: flex-end;
+
+
+`;
+
+export const Links = styled.div`
+margin-left: 40px;
+a{
+  text-decoration: none;
+  margin-right: 10px;
+  color: #cccc;
+  font-size: 20px;
+
+
+  &:hover{
+      color: whitesmoke;
+      transition: 0.5s;
   }
+}
 `;

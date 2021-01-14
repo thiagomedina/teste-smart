@@ -8,6 +8,9 @@ const ProductList = () => {
         <>
             <Header />
             <Content>
+                <h1>Produtos Cadastrados</h1>
+                <ProductCard />
+                <ProductCard />
                 <ProductCard />
             </Content>
         </>
