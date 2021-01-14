@@ -8,7 +8,7 @@ routes.get('/product', ProductController.index)
 routes.post('/product', ProductController.create)
 
 routes.put('/product/:id', ProductController.update)
-
+routes.delete('/product/:id', ProductController.destroy)
 
 
 

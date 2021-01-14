@@ -29,7 +29,7 @@ class ProductController {
       const ProductName = await Product.findById({ _id: id })
 
       if (!ProductName) {
-        return res.status(401).json('product  not found')
+        return res.status(401).json('product not found')
       }
 
       const { name, description, value, deadline } = req.body
@@ -40,7 +40,19 @@ class ProductController {
       return res.status(200).json('updated successfully')
     } catch (err) {
       console.log(err)
-      return res.status(401).json('not was possible update the user')
+      return res.status(401).json('not was possible update the project')
+    }
+  }
+
+
+  async destroy(req, res) {
+    const { id } = req.params
+    try {
+      await Product.findByIdAndDelete({ _id: id })
+      return res.status(200).json('deleted successfully')
+
+    } catch (err) {
+      return res.status(401).json('not was possible delete the project')
     }
   }
 
