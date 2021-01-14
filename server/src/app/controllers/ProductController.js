@@ -10,7 +10,9 @@ class ProductController {
     try {
 
       const { name, description, value, deadline } = req.body;
-      await Product.create({ name, description, value, deadline })
+      const valueReplaced = value.replace(',', '.')
+      const valueFormatted = parseFloat(valueReplaced)
+      await Product.create({ name, description, value: valueFormatted, deadline })
       return res.status(201).json('product register successfuly')
     } catch (err) {
       console.log(err)
