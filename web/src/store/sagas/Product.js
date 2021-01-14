@@ -7,7 +7,7 @@ function* addProduct(payload) {
     let response = {};
     try {
         response = yield call(api.post, 'product', payload.payload);
-        yield put({ type: Types.ADD_PRODUCT_SUCCESS });
+        yield put({ type: Types.SUCCESS });
         alert('salvo com sucesso')
     } catch (e) {
         alert('não foi possível salvar, tente novamente')
@@ -28,23 +28,50 @@ function* getProduct() {
 }
 
 
-function* updateProduct(payload){
+function* updateProduct(payload) {
 
     let response = {};
     try {
-        response = yield call(api.put, `product/`, payload);
-         console.log(payload)
+        response = yield call(api.put, `product/${payload.payload.id}`, payload.payload);
+        yield put({ type: Types.SUCCESS });
+        alert('atualizado com sucesso')
     } catch (e) {
         console.log(e);
         yield put({ type: Types.GET_PRODUCT_FAILURE, errorMessage: 'error' });
-    } 
+        alert('não foi possível atualizar')
+    }
 
 }
+
+
+
+function* removeProduct(payload) {
+
+    let response = {};
+    try {
+        yield call(api.delete, `product/${payload.payload}`);
+        response = yield call(api.get, 'product');
+        yield put({ type: Types.GET_PRODUCT_SUCCESS, payload: response.data });
+
+        yield put({ type: Types.SUCCESS });
+        alert('excluido com sucesso')
+    } catch (e) {
+        console.log(e);
+        yield put({ type: Types.GET_PRODUCT_FAILURE, errorMessage: 'error' });
+        alert('não foi possível excluir')
+    }
+
+}
+
+
+
 
 export default function* () {
     yield all([
         takeLatest(Types.ADD_PRODUCT, addProduct),
         takeLatest(Types.GET_PRODUCT, getProduct),
         takeLatest(Types.UPDATE_PRODUCT, updateProduct),
+        takeLatest(Types.REMOVE_PRODUCT, removeProduct),
+
     ]);
 }

@@ -1,12 +1,12 @@
 import React from 'react'
 import Header from '../../components/Header'
-import ProductFormContainer from '../../containers/ProductFormContainer'
+import ProductForm from '../../containers/ProductForm'
 
 const ProductRegister = () => {
     return (
         <>
             <Header />
-            <ProductFormContainer />
+            <ProductForm />
         </>
     )
 

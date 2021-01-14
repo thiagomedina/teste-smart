@@ -51,13 +51,3 @@ export const Button = styled.button`
   }
 `;
 
-export const Load = styled.div`
-display: flex;
-margin-top: 15px;
-img{
-  height:35px;
-  width: 35px;
-  margin: auto;
-}
-
-`;

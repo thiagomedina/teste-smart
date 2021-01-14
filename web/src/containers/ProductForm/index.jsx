@@ -4,14 +4,16 @@ import { Creators as ProductActions } from '../../store/ducks/Product';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import moment from 'moment'
-
+import { useHistory } from "react-router-dom";
+import Load from '../../components/Load'
 import getValidationErrors from "../../utils/getValidationErrors";
-import { Container, Form, Button, ErrorMessage, Load } from './styles'
-import loadSvg from '../../assets/load.svg'
+import { Container, Form, Button, ErrorMessage } from './styles'
+
+
 const ProductFormContainer = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
-
+    const history = useHistory()
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [value, setValue] = useState('');
@@ -27,7 +29,7 @@ const ProductFormContainer = () => {
             setName(productToEdit[0]?.name)
             setDescription(productToEdit[0]?.description)
             setValue(productToEdit[0]?.value)
-            setDeadline(moment(productToEdit[0]?.deadline).format('YYYY-MM-DD'))
+            setDeadline(moment(productToEdit[0]?.deadline).utc().format('YYYY-MM-DD'))
         }
     }, []);
 
@@ -38,10 +40,9 @@ const ProductFormContainer = () => {
             const schema = Yup.object().shape({
                 name: Yup.string().required('Nome Obrigatório'),
                 description: Yup.string().required('Descrição Obrigatória'),
-                value: Yup.number().required().typeError('O valor deve ser em números'),
+                value: Yup.string().required(" Valor Obrigatório"),
                 deadline: Yup.date().required().typeError('Data Obrigatória')
             })
-
             let data = { name, description, value, deadline }
 
             await schema.validate(data, {
@@ -50,10 +51,8 @@ const ProductFormContainer = () => {
             setInputError('')
 
             id ?
-                dispatch(ProductActions.updateProduct({...data, id}))
+                dispatch(ProductActions.updateProduct({ ...data, id }))
                 : dispatch(ProductActions.addProduct(data))
-
-
         } catch (err) {
             if (err instanceof Yup.ValidationError) {
                 const errors = getValidationErrors(err);
@@ -98,7 +97,7 @@ const ProductFormContainer = () => {
                     <ErrorMessage> {inputError.deadline && inputError.deadline} </ErrorMessage>
                 </Form>
                 {loading ?
-                    <Load><img src={loadSvg} alt="" /></Load>
+                    <Load />
                     : <Button type="submit" onClick={handleRegisterProduct}>Salvar</Button>}
             </fieldset>
         </Container>

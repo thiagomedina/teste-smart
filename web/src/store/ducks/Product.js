@@ -5,12 +5,12 @@ export const { Types, Creators } = createActions({
     addProductSuccess: ['payload'],
     addProductFailure: ['payload'],
     updateProduct: ['payload'],
-    updateProductSuccess: ['payload'],
     updateProductFailure: ['payload'],
     getProduct: null,
     getProductSuccess: ['payload'],
     getProductFailure: ['payload'],
-    removeProduct: ['payload']
+    removeProduct: ['payload'],
+    success: ['payload']
 });
 
 const INITIAL_STATE = {
@@ -24,7 +24,7 @@ const addProduct = (state = INITIAL_STATE, action = {}) => ({
     loading: true,
 });
 
-const addProductSuccess = (state = INITIAL_STATE, action) => ({
+const success = (state = INITIAL_STATE, action) => ({
     ...state,
     loading: false,
 });
@@ -39,11 +39,7 @@ const updateProduct = (state = INITIAL_STATE, action) => ({
     ...state,
     loading: true,
 });
-const updateProductSuccess = (state = INITIAL_STATE, action) => ({
-    ...state,
-    loading: false,
-    data: action.payload,
-});
+
 const updateProductFailure = (state = INITIAL_STATE, action) => ({
     ...state,
     loading: false,
@@ -79,9 +75,10 @@ export default createReducer(INITIAL_STATE, {
     [Types.GET_PRODUCT_SUCCESS]: getProductSuccess,
     [Types.GET_PRODUCT_FAILURE]: getProductFailure,
     [Types.UPDATE_PRODUCT]: updateProduct,
-    [Types.UPDATE_PRODUCT_SUCCESS]: updateProductSuccess,
     [Types.UPDATE_PRODUCT_FAILURE]: updateProductFailure,
     [Types.ADD_PRODUCT]: addProduct,
-    [Types.ADD_PRODUCT_SUCCESS]: addProductSuccess,
+    [Types.SUCCESS]: success,
     [Types.ADD_PRODUCT_FAILURE]: addProductFailure,
+    // [Types.REMOVE_PRODUCT]: removeProduct,
+
 });
