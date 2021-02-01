@@ -7,4 +7,6 @@ export const getClient = () => {
         host: 'localhost:9200',
         log: 'trace'
     })
+
+    return client
 }

@@ -1,11 +1,36 @@
 import Product from '../models/Product'
+import { getClient } from '../services/clientElasticSearch'
 
 
 class ProductController {
   async index(req, res) {
     const result = await Product.find({})
+
     return res.json(result)
   }
+
+  async transferElastic(req, res) {
+    const result = await Product.find({})
+
+    for await (let i of result) {
+
+      getClient().index({
+        index: 'teste',
+        type: 'type_teste',
+        body: i
+      }, (error) => {
+        if (error) {
+          return res.status(400).json('error')
+        }
+      })
+    }
+
+
+    return res.json(result)
+
+  }
+
+
   async create(req, res) {
     try {
 
